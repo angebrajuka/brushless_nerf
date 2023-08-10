@@ -1,5 +1,7 @@
 #include "settings.h"
 
+#define sleep delay
+
 void rev();
 void idle();
 void cycle(int);
@@ -18,10 +20,10 @@ void setup() {
 }
 
 void loop() {
-    if(digitalRead(PIN_TRIGGER) == HIGH) {
+    if(digitalRead(PIN_SAFETY) != HIGH && digitalRead(PIN_TRIGGER) == HIGH) {
         if(digitalRead(PIN_SELECT_AUTO) == HIGH) {
             rev();
-            delay(REV_TIME_MS);
+            sleep(REV_TIME_MS);
             do {
                 cycle(ROF_DPS_AUTO);
             } while(digitalRead(PIN_TRIGGER) == HIGH);
@@ -50,14 +52,14 @@ void idle() {
 void cycle(int darts_per_second) {
     const int half_cycle_delay_millis = 500 / darts_per_second;
     digitalWrite(PIN_PUSHER, HIGH);
-    delay(half_cycle_delay_millis);
+    sleep(half_cycle_delay_millis);
     digitalWrite(PIN_PUSHER, LOW);
-    delay(half_cycle_delay_millis);
+    sleep(half_cycle_delay_millis);
 }
 
 void burst(int num) {
     rev();
-    delay(REV_TIME_MS);
+    sleep(REV_TIME_MS);
     int i;
     for(i = 0; i < num; ++i) {
         cycle(ROF_DPS_BURST);
