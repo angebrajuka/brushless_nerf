@@ -14,21 +14,18 @@ void setup() {
 
     pinMode(PIN_SAFETY,         INPUT);
     pinMode(PIN_FPS_CONTROL,    INPUT);
-    pinMode(PIN_SELECT_BURST,   INPUT);
-    pinMode(PIN_SELECT_AUTO,    INPUT);
-    pinMode(PIN_TRIGGER,        INPUT);
 }
 
 void loop() {
     if(digitalRead(PIN_SAFETY) != HIGH && digitalRead(PIN_TRIGGER) == HIGH) {
-        if(digitalRead(PIN_SELECT_AUTO) == HIGH) {
+        if(analogRead(PIN_SELECT) > ANALOG_AUTO) {
             rev();
             sleep(REV_TIME_MS);
             do {
                 cycle(ROF_DPS_AUTO);
             } while(digitalRead(PIN_TRIGGER) == HIGH);
             idle();
-        } else if(digitalRead(PIN_SELECT_BURST) == HIGH) {
+        } else if(analogRead(PIN_SELECT) > ANALOG_SEMI) {
             burst(BURST_COUNT);
         } else {
             burst(1);

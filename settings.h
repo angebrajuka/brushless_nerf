@@ -13,6 +13,9 @@
 
 #define PIN_SAFETY          -1
 #define PIN_FPS_CONTROL     -1
-#define PIN_SELECT_BURST    -1
-#define PIN_SELECT_AUTO     -1
 #define PIN_TRIGGER         -1
+
+#define PIN_SELECT          A0
+#define ANALOG_SEMI         0
+#define ANALOG_BURST        600
+#define ANALOG_AUTO         1000
